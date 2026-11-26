@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf }}">
+  <meta name="max-mb" content="{{ max_mb }}">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="data:,">
+  <title>Análisis de Datos · Vinculación</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css', v=v) }}">
+</head>
+<body data-step="1">
+  <!-- Solo se ve si los estilos NO cargaron -->
+  <div class="css-check">
+    <p><b>La página no cargó sus estilos.</b></p>
+    <p>No abras <code>index.html</code> directamente. Ejecuta <b>iniciar.bat</b> (o <code>python app.py</code>)
+      y entra a <b>http://127.0.0.1:5000</b>. Si ya lo hiciste, presiona Ctrl+F5.</p>
+  </div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- Barra superior -->
+  <header class="appbar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="appbar-title">
+      <span class="appbar-kicker">Vinculación</span>
+      <strong>Análisis de Datos</strong>
+    </div>
+    <div class="secure">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+      Entorno seguro
+    </div>
+  </header>
+
+  <div class="shell">
+    <!-- Barra lateral -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Pasos 1-3 -->
+      <div id="sideSteps">
+        <p class="side-h">Proceso de análisis</p>
+        <p class="side-sub">Sigue los pasos</p>
+        <ol class="steps" id="stepList">
+          <li data-s="1"><span class="num">1</span><span><small>Paso 1</small>Cargar archivo</span></li>
+          <li data-s="2"><span class="num">2</span><span><small>Paso 2</small>Seleccionar columnas</span></li>
+          <li data-s="3"><span class="num">3</span><span><small>Paso 3</small>Confirmar análisis</span></li>
+          <li data-s="4"><span class="num">4</span><span><small>Paso 4</small>Dashboard</span></li>
+        </ol>
+      </div>
+
+      <!-- Paso 4: vistas -->
+      <div id="sideViews" hidden>
+        <p class="side-h">Vistas de Análisis</p>
+        <p class="side-sub">Explora tus datos</p>
+        <nav class="views" id="viewList" aria-label="Vistas de análisis"></nav>
+      </div>
+
+      <div class="side-bottom">
+        <div class="privacy-card" id="privacyCard">
+          <p class="privacy-title">Privacidad por diseño</p>
+          <ul>
+            <li>Nombres e identificaciones nunca se muestran</li>
+            <li>El archivo no se guarda</li>
+            <li>Solo datos agrupados</li>
+          </ul>
+        </div>
+        <div class="file-card" id="fileCard" hidden>
+          <p class="file-card-k">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+            Archivo actual
+          </p>
+          <p class="file-card-name" id="fileCardName"></p>
+          <p class="file-card-meta" id="fileCardMeta"></p>
+        </div>
+        <button class="btn btn-outline btn-block" type="button" id="newFileBtn" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 20h16"/></svg>
+          Cargar nuevo archivo
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <!-- ============ PASO 1: Cargar ============ -->
+      <section class="step" id="step1">
+        <div class="hero">
+          <div class="hero-lines" aria-hidden="true"></div>
+          <div class="hero-scan" aria-hidden="true"></div>
+          <div class="hero-content">
+            <p class="hero-kicker">Plataforma de análisis de datos</p>
+            <h1>Datos que cuidan.</h1>
+            <p class="hero-sub">Transforma tus registros en indicadores claros.<br>
+              Analiza tendencias sin exponer información personal.</p>
+          </div>
+          <div class="hero-orb" aria-hidden="true">
+            <span class="ring r1"></span><span class="ring r2"></span><span class="ring r3"></span><span class="core"></span>
+          </div>
+        </div>
+
+        <div class="card upload">
+          <p class="kicker">Comienza tu análisis</p>
+          <h2 class="upload-title">Análisis de datos</h2>
+          <p class="upload-sub">Carga tu archivo Excel para comenzar el análisis de forma segura</p>
+
+          <div class="upload-zone" id="uploadZone">
+            <div class="upload-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9.5 12.5 5 5m0-5-5 5"/></svg>
+            </div>
+            <button class="btn btn-primary btn-lg" type="button" data-pick>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 20h16"/></svg>
+              Seleccionar archivo Excel
+            </button>
+            <p class="upload-hint" id="uploadHint">o arrastra y suelta tu archivo .xlsx aquí</p>
+            <p class="upload-format">Formato compatible: .xlsx · .csv · máximo {{ max_mb }} MB</p>
+            <div class="progress" id="progress" hidden><span></span></div>
+          </div>
+
+          <div class="upload-foot">
+            <ul class="badges">
+              <li>Nombres e identificaciones se ocultan</li>
+              <li>El archivo no se guarda</li>
+              <li>Solo datos agrupados</li>
+            </ul>
+            <button class="link-btn" type="button" id="demoBtn">Usar datos de demostración →</button>
+          </div>
+        </div>
+        <input type="file" id="fileInput" accept=".xlsx,.csv" hidden>
+      </section>
+
+      <!-- ============ PASO 2: Columnas ============ -->
+      <section class="step" id="step2" hidden>
+        <p class="kicker">Paso 2 de 4</p>
+        <h2 class="page-title">Selecciona las columnas</h2>
+        <p class="page-sub">Explora las hojas y mueve las columnas que necesitas a tu selección.</p>
+
+        <div class="picker-top">
+          <p class="file-pill">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+            <span>Archivo seleccionado: <b id="pickFile"></b></span>
+          </p>
+          <p class="picker-meta" id="pickMeta"></p>
+        </div>
+
+        <div class="picker">
+          <section class="card panel">
+            <header class="panel-head">
+              <h3>Columnas y hojas detectadas</h3>
+              <span class="muted-sm" id="availCount"></span>
+            </header>
+            <label class="search">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+              <input type="search" id="searchInput" placeholder="Buscar columna u hoja" maxlength="60" autocomplete="off" spellcheck="false">
+            </label>
+            <div class="list" id="availList"></div>
+            <p class="panel-foot" id="availFoot"></p>
+          </section>
+
+          <div class="transfer">
+            <button class="tbtn" type="button" id="addAll" title="Añadir todas" aria-label="Añadir todas"><svg viewBox="0 0 24 24"><path d="m6 7 5 5-5 5M13 7l5 5-5 5"/></svg></button>
+            <button class="tbtn primary" type="button" id="addSel" title="Añadir marcadas" aria-label="Añadir marcadas"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></button>
+            <button class="tbtn" type="button" id="remAll" title="Quitar todas" aria-label="Quitar todas"><svg viewBox="0 0 24 24"><path d="m18 7-5 5 5 5M11 7l-5 5 5 5"/></svg></button>
+            <button class="tbtn" type="button" id="remSel" title="Quitar marcadas" aria-label="Quitar marcadas"><svg viewBox="0 0 24 24"><path d="m15 6-6 6 6 6"/></svg></button>
+          </div>
+
+          <section class="card panel">
+            <header class="panel-head">
+              <h3>Columnas seleccionadas</h3>
+              <span class="count-chip" id="selCount">0 columnas</span>
+            </header>
+            <div class="list" id="selList"></div>
+            <p class="panel-foot" id="selFoot">Se conservará el orden de las columnas.</p>
+          </section>
+        </div>
+
+        <footer class="step-foot">
+          <button class="btn btn-outline" type="button" data-back="1">Retroceder</button>
+          <p class="muted-sm">Puedes combinar columnas de distintas hojas.</p>
+          <button class="btn btn-primary" type="button" id="toStep3" disabled>Siguiente</button>
+        </footer>
+      </section>
+
+      <!-- ============ PASO 3: Confirmar ============ -->
+      <section class="step" id="step3" hidden>
+        <p class="kicker">Paso 3 de 4</p>
+        <h2 class="page-title">Confirma tu análisis</h2>
+        <p class="page-sub">Revisa las vistas que se generarán con las columnas seleccionadas.</p>
+
+        <div class="kpis" id="confirmKpis"></div>
+
+        <div class="card confirm">
+          <header class="panel-head"><h3>Vistas que se generarán</h3><span class="muted-sm" id="viewsCount"></span></header>
+          <ol class="confirm-list" id="confirmList"></ol>
+        </div>
+
+        <div class="notice">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          <div>
+            <p class="notice-title" id="hiddenTitle"></p>
+            <p class="notice-text">Las columnas con nombres, identificaciones, contactos o códigos personales se descartan en el servidor y nunca se envían a esta página.</p>
+          </div>
+        </div>
+
+        <footer class="step-foot">
+          <button class="btn btn-outline" type="button" data-back="2">Retroceder</button>
+          <span></span>
+          <button class="btn btn-primary" type="button" id="toStep4">Generar dashboard</button>
+        </footer>
+      </section>
+
+      <!-- ============ PASO 4: Dashboard ============ -->
+      <section class="step" id="step4" hidden>
+        <div class="dash-head">
+          <div>
+            <p class="kicker">Dashboard</p>
+            <h2 class="page-title" id="viewTitle"></h2>
+            <p class="page-sub" id="viewSub"></p>
+          </div>
+          <button class="btn btn-primary" type="button" id="exportBtn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v12m0 0-5-5m5 5 5-5M4 20h16"/></svg>
+            Exportar gráfico
+          </button>
+        </div>
+
+        <div class="kpis" id="viewKpis"></div>
+
+        <div class="charts">
+          <article class="card chart-card">
+            <h3 id="mainTitle"></h3>
+            <p class="chart-sub" id="mainSub"></p>
+            <div class="chart-box" id="mainBox"><svg id="mainChart" role="img" aria-labelledby="mainTitle"></svg></div>
+          </article>
+          <article class="card chart-card" id="sideChartCard">
+            <h3 id="sideTitle"></h3>
+            <p class="chart-sub" id="sideSub"></p>
+            <div class="donut-box"><svg id="donut" viewBox="0 0 200 200" role="img" aria-labelledby="sideTitle"></svg></div>
+            <ul class="legend" id="legend"></ul>
+          </article>
+        </div>
+
+        <div class="insight">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+          <div>
+            <p class="insight-title" id="insightTitle"></p>
+            <p class="insight-text" id="insightText"></p>
+          </div>
+        </div>
+
+        <div class="table-toggle">
+          <button class="btn btn-outline" type="button" id="tableToggle" aria-expanded="false" aria-controls="tableCard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18M3 12h18M3 19h18"/></svg>
+            <span>Mostrar tabla</span>
+          </button>
+        </div>
+        <section class="card table-card" id="tableCard" hidden>
+          <table class="data-table">
+            <thead><tr><th id="thGroup">Grupo</th><th class="r">Registros</th><th class="r">Porcentaje</th></tr></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </section>
+
+        <footer class="dash-foot">
+          <span id="footSource"></span>
+          <span id="footNote"></span>
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <div class="tooltip" id="tooltip" role="status" hidden></div>
+  <div class="toast" id="toast" role="alert" hidden></div>
+  <script src="{{ url_for('static', filename='js/app.js', v=v) }}" defer></script>
+</body>
+</html>
